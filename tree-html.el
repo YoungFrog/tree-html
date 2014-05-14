@@ -74,7 +74,8 @@ list of trees contained in it.
 
 SEEN is used internally to check for circular structures."
   (or seen (setq seen (make-hash-table :test 'eq)))
-  (if (gethash tree seen)
+  (if (and (not (stringp tree))
+           (gethash tree seen))
       (progn
         (error "Circular structure detected: %S" tree)
         nil)
